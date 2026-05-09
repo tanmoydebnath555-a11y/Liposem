@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Liposem — Saroglitazar Magnesium INN 2mg | Everest Pharmaceuticals</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Calibri', 'Calibri Light', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --teal: #1DB5C5;
+      --teal-dark: #0e8f9c;
+      --teal-glow: rgba(29,181,197,0.18);
+      --teal-glow-strong: rgba(29,181,197,0.35);
+      --red: #E8272A;
+      --red-glow: rgba(232,39,42,0.2);
+      --green-accent: #9ad63c;
+      --bg-base: #000000;
+      --bg-surface: #0a0e18;
+      --bg-card: rgba(255,255,255,0.04);
+      --bg-card-hover: rgba(29,181,197,0.07);
+      --border-subtle: rgba(255,255,255,0.07);
+      --border-teal: rgba(29,181,197,0.3);
+      --text-primary: #ffffff;
+      --text-secondary: #a0aec0;
+      --text-muted: #636b7a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: inherit; }
+
+    html {
+      scroll-behavior: smooth;
+      font-family: 'Calibri', 'Calibri Light', Calibri, sans-serif !important;
+    }
+
+    body {
+      font-family: 'Calibri', 'Calibri Light', Calibri, sans-serif !important;
+      background: var(--bg-base);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NOISE TEXTURE ─── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.4;
+    }
+
+    /* ─── GRID OVERLAY ─── */
+    .grid-overlay {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(29,181,197,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(29,181,197,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 20px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.3s ease, padding 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 14px 40px;
+    }
+
+    .nav-inner {
+      position: relative;
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; max-width: 1280px; margin: 0 auto;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      padding: 14px 28px;
+      gap: 16px;
+    }
+
+    .nav-logo {
+      position: absolute;
+      left: 50%; transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .nav-logo img { height: 44px; width: auto; pointer-events: auto; }
+    .nav-right { display: flex; justify-content: flex-end; }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 8px; list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Calibri', Calibri, sans-serif; font-size: 0.875rem; font-weight: 500;
+      color: rgba(255,255,255,0.7); text-decoration: none;
+      padding: 8px 14px; border-radius: 8px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--teal); background: var(--teal-glow); }
+
+    .nav-cta {
+      background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+      color: #fff; font-family: 'Calibri', Calibri, sans-serif; font-size: 0.875rem; font-weight: 600;
+      padding: 10px 22px; border-radius: 10px; border: none; cursor: pointer;
+      text-decoration: none; white-space: nowrap;
+      box-shadow: 0 4px 16px var(--teal-glow-strong);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px var(--teal-glow-strong); }
+    .nav-cta:active { transform: translateY(0); }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; padding: 120px 40px 80px;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(29,181,197,0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(154,214,60,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 50% at 10% 90%, rgba(232,39,42,0.06) 0%, transparent 60%),
+        #000;
+    }
+
+    /* Animated rings */
+    .ring {
+      position: absolute; border-radius: 50%;
+      border: 1px solid rgba(29,181,197,0.12);
+      animation: ring-pulse 6s ease-in-out infinite;
+    }
+    .ring-1 { width: 600px; height: 600px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 0s; }
+    .ring-2 { width: 900px; height: 900px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 1s; }
+    .ring-3 { width: 1200px; height: 1200px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 2s; }
+
+    @keyframes ring-pulse {
+      0%, 100% { opacity: 0.15; transform: translate(-50%,-50%) scale(1); }
+      50% { opacity: 0.35; transform: translate(-50%,-50%) scale(1.03); }
+    }
+
+    /* Floating particles */
+    .particle {
+      position: absolute; border-radius: 50%;
+      background: var(--teal); opacity: 0;
+      animation: float-particle 8s ease-in-out infinite;
+    }
+
+    @keyframes float-particle {
+      0% { opacity: 0; transform: translateY(0) scale(0.5); }
+      20% { opacity: 0.6; }
+      80% { opacity: 0.4; }
+      100% { opacity: 0; transform: translateY(-120px) scale(1.2); }
+    }
+
+    .hero-content {
+      position: relative; z-index: 1;
+      max-width: 860px; margin: 0 auto; text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(29,181,197,0.1); border: 1px solid var(--border-teal);
+      border-radius: 100px; padding: 6px 16px; margin-bottom: 28px;
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--teal);
+    }
+
+    .hero-badge-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--teal);
+      animation: blink 1.5s ease-in-out infinite;
+    }
+
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.2; } }
+
+    .hero-logo { height: 80px; width: auto; margin-bottom: 32px; filter: drop-shadow(0 0 30px rgba(29,181,197,0.4)); }
+
+    .hero-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.75rem);
+      font-weight: 900; line-height: 1.1;
+      letter-spacing: -0.02em; margin-bottom: 20px;
+    }
+
+    .hero-title .highlight-teal { color: var(--teal); }
+    .hero-title .highlight-red { color: var(--red); }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.25rem); font-weight: 400;
+      color: var(--text-secondary); line-height: 1.7; margin-bottom: 40px;
+      max-width: 640px; margin-left: auto; margin-right: auto;
+    }
+
+    .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+      color: #fff; font-weight: 600; padding: 14px 32px;
+      border-radius: 12px; border: none; cursor: pointer;
+      font-size: 1rem; text-decoration: none;
+      box-shadow: 0 4px 24px var(--teal-glow-strong), 0 0 0 1px rgba(29,181,197,0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px var(--teal-glow-strong); }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border-subtle);
+      color: var(--text-primary); font-weight: 500; padding: 14px 32px;
+      border-radius: 12px; cursor: pointer; font-size: 1rem;
+      text-decoration: none; backdrop-filter: blur(8px);
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+
+    .btn-secondary:hover { background: rgba(255,255,255,0.09); border-color: var(--border-teal); transform: translateY(-1px); }
+    .btn-secondary:active { transform: translateY(0); }
+
+    /* Hero scroll indicator */
+    .scroll-indicator {
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 1;
+      color: var(--text-muted); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+
+    .scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--teal), transparent);
+      animation: scroll-drop 2s ease-in-out infinite;
+    }
+
+    @keyframes scroll-drop { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+    /* ─── SECTIONS ─── */
+    section { position: relative; z-index: 1; }
+
+    .section-inner { max-width: 1200px; margin: 0 auto; padding: 100px 40px; }
+
+    .section-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: 14px;
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    .section-label::before {
+      content: ''; display: block; width: 24px; height: 1px;
+      background: var(--teal);
+    }
+
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.5rem); font-weight: 700;
+      line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      font-size: 1.0625rem; color: var(--text-secondary);
+      line-height: 1.7; max-width: 580px;
+    }
+
+    /* ─── MECHANISM OF ACTION ─── */
+    #mechanism { background: linear-gradient(180deg, #000 0%, #060d14 100%); }
+
+    .moa-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 60px;
+    }
+
+    .moa-card {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: 20px; padding: 36px; position: relative; overflow: hidden;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+      cursor: default;
+    }
+
+    .moa-card::before {
+      content: ''; position: absolute; inset: 0; border-radius: 20px;
+      opacity: 0; transition: opacity 0.3s;
+    }
+
+    .moa-card.alpha::before { background: radial-gradient(ellipse at top left, rgba(29,181,197,0.12) 0%, transparent 70%); }
+    .moa-card.gamma::before { background: radial-gradient(ellipse at top right, rgba(154,214,60,0.1) 0%, transparent 70%); }
+
+    .moa-card:hover { transform: translateY(-4px); border-color: var(--border-teal); }
+    .moa-card:hover::before { opacity: 1; }
+    .moa-card.alpha:hover { background: rgba(29,181,197,0.06); }
+    .moa-card.gamma:hover { background: rgba(154,214,60,0.04); }
+
+    .moa-icon {
+      width: 60px; height: 60px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px; font-size: 28px;
+    }
+
+    .moa-icon.alpha { background: rgba(29,181,197,0.12); border: 1px solid rgba(29,181,197,0.25); }
+    .moa-icon.gamma { background: rgba(154,214,60,0.10); border: 1px solid rgba(154,214,60,0.25); }
+
+    .moa-tag {
+      display: inline-block; font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 4px 12px; border-radius: 100px; margin-bottom: 12px;
+    }
+
+    .moa-tag.alpha { background: rgba(29,181,197,0.12); color: var(--teal); border: 1px solid rgba(29,181,197,0.25); }
+    .moa-tag.gamma { background: rgba(154,214,60,0.10); color: var(--green-accent); border: 1px solid rgba(154,214,60,0.25); }
+
+    .moa-card h3 {
+      font-family: 'Orbitron', sans-serif; font-size: 1.125rem; font-weight: 700;
+      margin-bottom: 10px; line-height: 1.3;
+    }
+
+    .moa-card p { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px; }
+
+    .moa-benefits { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+    .moa-benefit-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 0.875rem; color: var(--text-secondary);
+      padding: 10px 14px; border-radius: 10px;
+      background: rgba(255,255,255,0.03); border: 1px solid transparent;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .moa-card:hover .moa-benefit-item { background: rgba(255,255,255,0.04); }
+
+    .moa-benefit-item.alpha-item:hover { border-color: rgba(29,181,197,0.2); }
+    .moa-benefit-item.gamma-item:hover { border-color: rgba(154,214,60,0.2); }
+
+    .benefit-dot {
+      width: 6px; height: 6px; border-radius: 50%; margin-top: 6px; flex-shrink: 0;
+    }
+
+    .benefit-dot.alpha { background: var(--teal); box-shadow: 0 0 6px var(--teal); }
+    .benefit-dot.gamma { background: var(--green-accent); box-shadow: 0 0 6px var(--green-accent); }
+
+    .moa-hover-info {
+      margin-top: 20px; padding: 16px;
+      border-radius: 12px; font-size: 0.8125rem;
+      opacity: 0; transform: translateY(6px);
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+    }
+
+    .alpha .moa-hover-info { background: rgba(29,181,197,0.08); border: 1px solid rgba(29,181,197,0.2); color: var(--teal); }
+    .gamma .moa-hover-info { background: rgba(154,214,60,0.07); border: 1px solid rgba(154,214,60,0.2); color: var(--green-accent); }
+
+    .moa-card:hover .moa-hover-info { opacity: 1; transform: translateY(0); }
+
+    .moa-divider {
+      grid-column: 1 / -1; display: flex; align-items: center; gap: 24px;
+      padding: 20px 0;
+    }
+
+    .moa-divider-line { flex: 1; height: 1px; background: var(--border-subtle); }
+
+    .moa-center-badge {
+      padding: 10px 20px; border-radius: 100px;
+      background: rgba(29,181,197,0.08); border: 1px solid var(--border-teal);
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--teal); white-space: nowrap;
+    }
+
+    /* ─── INDICATIONS ─── */
+    #indications {
+      background: linear-gradient(180deg, #060d14 0%, #000 100%);
+    }
+
+    .indications-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px; margin-top: 60px;
+    }
+
+    .indication-card {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: 20px; padding: 32px; position: relative; overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s, background 0.3s;
+    }
+
+    .indication-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px;
+      transition: opacity 0.3s;
+      opacity: 0;
+    }
+
+    .indication-card:nth-child(1)::after { background: linear-gradient(90deg, var(--teal), var(--green-accent)); }
+    .indication-card:nth-child(2)::after { background: linear-gradient(90deg, var(--red), var(--teal)); }
+    .indication-card:nth-child(3)::after { background: linear-gradient(90deg, var(--green-accent), var(--teal)); }
+
+    .indication-card:hover { transform: translateY(-4px); border-color: var(--border-teal); background: var(--bg-card-hover); }
+    .indication-card:hover::after { opacity: 1; }
+
+    .indication-num {
+      font-family: 'Orbitron', sans-serif; font-size: 3rem; font-weight: 900;
+      line-height: 1; margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--teal), var(--green-accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .indication-card h3 {
+      font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 700;
+      margin-bottom: 12px; line-height: 1.4;
+    }
+
+    .indication-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 16px; }
+
+    .indication-bullets { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+    .indication-bullets li {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 0.85rem; color: var(--text-secondary);
+    }
+
+    .indication-bullets li::before {
+      content: '›'; color: var(--teal); font-weight: 700;
+      flex-shrink: 0; margin-top: 1px;
+    }
+
+    /* ─── EFFICACY ─── */
+    #efficacy {
+      background: linear-gradient(180deg, #000 0%, #06101a 100%);
+    }
+
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      gap: 16px; margin-bottom: 60px;
+    }
+
+    @media (max-width: 1100px) {
+      .stats-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 700px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .stat-card {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: 16px; padding: 28px 24px; text-align: center;
+      position: relative; overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .stat-card:hover { transform: translateY(-3px); border-color: var(--border-teal); }
+
+    .stat-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--teal), var(--green-accent));
+    }
+
+    .stat-number {
+      font-family: 'Orbitron', sans-serif; font-size: 2.25rem; font-weight: 900;
+      color: var(--teal); line-height: 1.1; margin-bottom: 6px;
+    }
+
+    .stat-number.range { font-size: 1.5rem; line-height: 1.2; }
+
+    .stat-unit { font-size: 1.125rem; color: var(--green-accent); }
+
+    .stat-label {
+      font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;
+    }
+
+    .stat-label a {
+      color: var(--teal); text-decoration: none; border-bottom: 1px dotted rgba(29,181,197,0.4);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .stat-label a:hover { color: #fff; border-color: rgba(255,255,255,0.4); }
+
+    .chart-container {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: 20px; padding: 36px; position: relative;
+    }
+
+    .chart-title {
+      font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 700;
+      margin-bottom: 24px; color: var(--text-primary);
+    }
+
+    .chart-subtitle { font-size: 0.8125rem; color: var(--text-muted); margin-top: 16px; }
+
+    .trials-strip {
+      display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px;
+    }
+
+    .trial-badge {
+      background: rgba(29,181,197,0.08); border: 1px solid var(--border-teal);
+      border-radius: 8px; padding: 6px 14px;
+      font-size: 0.75rem; font-weight: 600; color: var(--teal);
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── SAFETY ─── */
+    #safety {
+      background: linear-gradient(180deg, #06101a 0%, #000 100%);
+    }
+
+    .safety-header { display: flex; align-items: flex-start; gap: 60px; margin-bottom: 60px; flex-wrap: wrap; }
+
+    .safety-shield {
+      width: 160px; height: 160px; flex-shrink: 0;
+      background: rgba(29,181,197,0.06); border: 1px solid var(--border-teal);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 64px;
+      box-shadow: 0 0 40px rgba(29,181,197,0.12), inset 0 0 40px rgba(29,181,197,0.06);
+      animation: shield-glow 3s ease-in-out infinite;
+    }
+
+    @keyframes shield-glow {
+      0%,100% { box-shadow: 0 0 40px rgba(29,181,197,0.12), inset 0 0 40px rgba(29,181,197,0.06); }
+      50% { box-shadow: 0 0 60px rgba(29,181,197,0.22), inset 0 0 60px rgba(29,181,197,0.10); }
+    }
+
+    .safety-intro { flex: 1; min-width: 260px; }
+
+    .safety-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .safety-item {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: 16px; padding: 28px;
+      transition: transform 0.3s, border-color 0.3s, background 0.3s;
+    }
+
+    .safety-item:hover { transform: translateY(-3px); border-color: rgba(29,181,197,0.3); background: rgba(29,181,197,0.04); }
+
+    .safety-check {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: rgba(29,181,197,0.1); border: 1px solid rgba(29,181,197,0.3);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px; font-size: 18px;
+    }
+
+    .safety-item h4 {
+      font-family: 'Orbitron', sans-serif; font-size: 0.875rem; font-weight: 700;
+      margin-bottom: 8px; color: var(--text-primary);
+    }
+
+    .safety-item p { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6; }
+
+    .safety-highlight {
+      margin-top: 12px; padding: 10px 14px; border-radius: 8px;
+      background: rgba(29,181,197,0.06); border-left: 3px solid var(--teal);
+      font-size: 0.8125rem; color: var(--teal); font-weight: 500;
+    }
+
+    /* ─── VS SECTION ─── */
+    .comparison-grid {
+      display: grid; grid-template-columns: 1fr auto 1fr; gap: 24px;
+      align-items: center; margin-top: 60px;
+    }
+
+    .vs-badge {
+      width: 60px; height: 60px; border-radius: 50%;
+      background: rgba(232,39,42,0.1); border: 2px solid rgba(232,39,42,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Orbitron', sans-serif; font-size: 0.875rem; font-weight: 900;
+      color: var(--red);
+    }
+
+    .compare-col {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: 16px; padding: 28px;
+    }
+
+    .compare-col.liposem { border-color: var(--border-teal); background: rgba(29,181,197,0.04); }
+
+    .compare-col h4 {
+      font-family: 'Orbitron', sans-serif; font-size: 0.875rem; font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .compare-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+    .compare-list li {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 0.875rem; color: var(--text-secondary);
+    }
+
+    .compare-list.liposem-list li { color: rgba(255,255,255,0.85); }
+
+    .check-icon { color: var(--teal); flex-shrink: 0; }
+    .cross-icon { color: var(--red); flex-shrink: 0; }
+
+    /* ─── RESOURCES ─── */
+    #resources {
+      background: linear-gradient(180deg, #000 0%, #060d14 50%, #000 100%);
+    }
+
+    .download-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px; margin-top: 60px;
+    }
+
+    .download-card {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: 16px; padding: 28px;
+      display: flex; flex-direction: column; gap: 16px;
+      transition: transform 0.3s, border-color 0.3s, background 0.3s;
+    }
+
+    .download-card:hover { transform: translateY(-3px); border-color: var(--border-teal); background: var(--bg-card-hover); }
+
+    .download-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: rgba(29,181,197,0.1); border: 1px solid rgba(29,181,197,0.2);
+      display: flex; align-items: center; justify-content: center; font-size: 20px;
+    }
+
+    .download-card h4 {
+      font-family: 'Orbitron', sans-serif; font-size: 0.875rem; font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .download-card p { font-size: 0.8125rem; color: var(--text-muted); flex: 1; }
+
+    .download-btn {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.8125rem; font-weight: 600; color: var(--teal);
+      padding: 8px 14px; border-radius: 8px;
+      background: rgba(29,181,197,0.08); border: 1px solid rgba(29,181,197,0.2);
+      cursor: pointer; transition: background 0.2s, border-color 0.2s;
+      width: max-content; text-decoration: none;
+    }
+
+    .download-btn:hover { background: rgba(29,181,197,0.15); border-color: rgba(29,181,197,0.4); }
+
+    /* ─── FAQ ACCORDION ─── */
+    .faq-list { margin-top: 60px; display: flex; flex-direction: column; gap: 12px; }
+
+    .faq-item {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: 14px; overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .faq-item.open { border-color: var(--border-teal); }
+
+    .faq-trigger {
+      width: 100%; padding: 22px 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      background: none; border: none; cursor: pointer; text-align: left;
+      font-family: 'Calibri', Calibri, sans-serif; font-size: 0.9375rem; font-weight: 500;
+      color: var(--text-primary);
+      transition: color 0.2s;
+    }
+
+    .faq-item.open .faq-trigger { color: var(--teal); }
+
+    .faq-chevron {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border-subtle);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      font-size: 14px; transition: transform 0.3s, background 0.2s;
+    }
+
+    .faq-item.open .faq-chevron { transform: rotate(180deg); background: rgba(29,181,197,0.1); border-color: var(--border-teal); color: var(--teal); }
+
+    .faq-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s;
+    }
+
+    .faq-item.open .faq-body { max-height: 400px; }
+
+    .faq-content {
+      padding: 0 24px 22px;
+      font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative; z-index: 1;
+      background: linear-gradient(180deg, #060d14 0%, #000 100%);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto; padding: 60px 40px;
+      display: flex; flex-direction: column; gap: 40px;
+    }
+
+    .footer-top {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 40px; flex-wrap: wrap;
+    }
+
+    .footer-brand { max-width: 320px; }
+
+    .footer-brand-logos { display: flex; align-items: center; gap: 20px; margin-bottom: 16px; flex-wrap: wrap; }
+
+    .footer-logo { height: 40px; width: auto; }
+    .footer-logo.everest { height: 36px; filter: brightness(0) invert(1) opacity(0.7); }
+    .footer-logo.liposem { filter: drop-shadow(0 0 8px rgba(29,181,197,0.3)); }
+
+    .footer-divider-v {
+      width: 1px; height: 36px; background: var(--border-subtle);
+    }
+
+    .footer-brand p {
+      font-size: 0.8125rem; color: var(--text-muted); line-height: 1.6;
+    }
+
+    .footer-links { display: flex; gap: 60px; flex-wrap: wrap; }
+
+    .footer-col h5 {
+      font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-secondary); margin-bottom: 16px;
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+    .footer-col a {
+      font-size: 0.875rem; color: var(--text-muted); text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover { color: var(--teal); }
+
+    .footer-bottom {
+      padding-top: 28px; border-top: 1px solid var(--border-subtle);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    }
+
+    .footer-bottom p { font-size: 0.75rem; color: var(--text-muted); }
+
+    .footer-disclaimer {
+      font-size: 0.7rem; color: var(--text-muted); line-height: 1.5;
+      padding: 16px; border-radius: 10px;
+      background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle);
+    }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal.delay-1 { transition-delay: 0.1s; }
+    .reveal.delay-2 { transition-delay: 0.2s; }
+    .reveal.delay-3 { transition-delay: 0.3s; }
+    .reveal.delay-4 { transition-delay: 0.4s; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .moa-grid { grid-template-columns: 1fr; }
+      .comparison-grid { grid-template-columns: 1fr; }
+      .vs-badge { display: none; }
+      .nav-links { display: none; }
+      nav { padding: 16px 20px; }
+      .nav-inner { padding: 12px 20px; }
+      .section-inner { padding: 70px 24px; }
+      #hero { padding: 100px 24px 60px; }
+      .safety-header { flex-direction: column; align-items: center; text-align: center; }
+      .footer-top { flex-direction: column; }
+    }
+
+    @media (max-width: 600px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .hero-title { font-size: 1.875rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="grid-overlay"></div>
+
+<!-- ═══════════════════ NAV ═══════════════════ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <ul class="nav-links">
+      <li><a href="#mechanism">Mechanism</a></li>
+      <li><a href="#indications">Indications</a></li>
+      <li><a href="#efficacy">Clinical Data</a></li>
+      <li><a href="#safety">Safety</a></li>
+      <li><a href="#resources">Resources</a></li>
+    </ul>
+    <div class="nav-logo">
+      <img src="brand_assets/Untitled-7-01.png" alt="Liposem" />
+    </div>
+    <div class="nav-right">
+      <a href="https://drive.google.com/file/d/1ul2-t0Jkyo_nZpHncFeir1xo15gzE9gn/view?usp=sharing" target="_blank" rel="noopener" class="nav-cta">Prescribing Info ↗</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+
+  <!-- Rings -->
+  <div class="ring ring-1"></div>
+  <div class="ring ring-2"></div>
+  <div class="ring ring-3"></div>
+
+  <!-- Particles -->
+  <div class="particle" style="width:4px;height:4px;left:15%;top:60%;animation-delay:0s;animation-duration:7s;"></div>
+  <div class="particle" style="width:3px;height:3px;left:25%;top:70%;animation-delay:1.2s;animation-duration:9s;"></div>
+  <div class="particle" style="width:5px;height:5px;left:70%;top:65%;animation-delay:2.5s;animation-duration:8s;"></div>
+  <div class="particle" style="width:3px;height:3px;left:80%;top:55%;animation-delay:0.8s;animation-duration:6s;"></div>
+  <div class="particle" style="width:4px;height:4px;left:55%;top:75%;animation-delay:3s;animation-duration:10s;"></div>
+  <div class="particle" style="width:3px;height:3px;left:40%;top:80%;animation-delay:1.8s;animation-duration:7.5s;background:#9ad63c;"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Dual PPAR α/γ Agonist · Saroglitazar Magnesium 2 mg
+    </div>
+
+    <img src="brand_assets/Untitled-7-01.png" alt="Liposem" class="hero-logo" />
+
+    <h1 class="hero-title">
+      The World's First<br />
+      <span class="highlight-teal">Metabolic Reset</span><br />
+      <span class="highlight-red">Dual Agonist</span>
+    </h1>
+
+    <p class="hero-sub">
+      A breakthrough in metabolic pharmacology. Liposem simultaneously activates PPAR-α and PPAR-γ receptors — delivering precision lipid control, insulin sensitization, and hepatic protection in one tablet.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#efficacy" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        View Clinical Data
+      </a>
+      <a href="#mechanism" class="btn-secondary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Mechanism of Action
+      </a>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ═══════════════════ MECHANISM ═══════════════════ -->
+<section id="mechanism">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Pharmacology</div>
+      <h2 class="section-title">Mechanism of Action</h2>
+      <p class="section-subtitle">Liposem's balanced dual-agonism addresses two critical metabolic pathways simultaneously — delivering outcomes neither approach achieves alone.</p>
+    </div>
+
+    <div class="moa-grid">
+
+      <!-- PPAR-α Card -->
+      <div class="moa-card alpha reveal delay-1">
+        <div class="moa-tag alpha">PPAR-α Activation (Predominant)</div>
+        <div class="moa-icon alpha">🫀</div>
+        <h3>Lipid & Hepatic Axis</h3>
+        <p>Predominantly activates PPAR-α receptors in the liver, driving lipid catabolism, reducing VLDL production, and enhancing fatty acid oxidation.</p>
+        <ul class="moa-benefits">
+          <li class="moa-benefit-item alpha-item"><span class="benefit-dot alpha"></span>Upregulates lipoprotein lipase (LPL) — accelerated TG clearance</li>
+          <li class="moa-benefit-item alpha-item"><span class="benefit-dot alpha"></span>Reduces VLDL synthesis in hepatocytes</li>
+          <li class="moa-benefit-item alpha-item"><span class="benefit-dot alpha"></span>Enhances fatty acid β-oxidation</li>
+          <li class="moa-benefit-item alpha-item"><span class="benefit-dot alpha"></span>Reversal of hepatic steatosis (MASLD/NASH)</li>
+        </ul>
+        <div class="moa-hover-info">
+          ⚡ Target: Triglycerides ↓45–60% · ALT/AST normalization · LSM & CAP score reduction
+        </div>
+      </div>
+
+      <!-- PPAR-γ Card -->
+      <div class="moa-card gamma reveal delay-2">
+        <div class="moa-tag gamma">PPAR-γ Activation (Moderate)</div>
+        <div class="moa-icon gamma">🔬</div>
+        <h3>Insulin & Glucose Axis</h3>
+        <p>Moderately activates PPAR-γ in muscle and adipose tissue — improving insulin sensitivity without the extreme edema or weight gain of classical thiazolidinediones.</p>
+        <ul class="moa-benefits">
+          <li class="moa-benefit-item gamma-item"><span class="benefit-dot gamma"></span>Increases GLUT4 expression — enhanced glucose uptake</li>
+          <li class="moa-benefit-item gamma-item"><span class="benefit-dot gamma"></span>Improves peripheral insulin sensitivity</li>
+          <li class="moa-benefit-item gamma-item"><span class="benefit-dot gamma"></span>Reduces fasting insulin and HOMA-IR</li>
+          <li class="moa-benefit-item gamma-item"><span class="benefit-dot gamma"></span>Lowers HbA1c by 0.7%–1.5% absolute</li>
+        </ul>
+        <div class="moa-hover-info">
+          ⚡ Target: HbA1c ↓0.7–1.5% · Fasting glucose ↓ · HOMA-IR improvement
+        </div>
+      </div>
+
+      <div class="moa-divider">
+        <div class="moa-divider-line"></div>
+        <div class="moa-center-badge">Balanced Dual-Receptor Synergy</div>
+        <div class="moa-divider-line"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ INDICATIONS ═══════════════════ -->
+<section id="indications">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Clinical Indications</div>
+      <h2 class="section-title">Built for the Most Challenging Metabolic Profiles</h2>
+      <p class="section-subtitle">Precision-targeted therapy for patient populations where conventional agents fall short.</p>
+    </div>
+
+    <div class="indications-grid">
+
+      <div class="indication-card reveal delay-1">
+        <div class="indication-num">01</div>
+        <h3>Diabetic Dyslipidemia</h3>
+        <p>For T2DM patients with elevated triglycerides uncontrolled by statin monotherapy — where the residual metabolic risk demands a dual-action approach.</p>
+        <ul class="indication-bullets">
+          <li>TG &gt;150 mg/dL despite statin therapy</li>
+          <li>Mixed hyperlipidemia in T2DM</li>
+          <li>High-risk cardiovascular phenotype</li>
+          <li>Non-alcoholic fatty liver with T2DM</li>
+        </ul>
+      </div>
+
+      <div class="indication-card reveal delay-2">
+        <div class="indication-num">02</div>
+        <h3>MASLD / NASH</h3>
+        <p>Directly targets hepatic steatosis, inflammation, and fibrosis — reducing FibroScan-measured liver stiffness (LSM) and Controlled Attenuation Parameter (CAP) scores.</p>
+        <ul class="indication-bullets">
+          <li>Elevated ALT/AST with fatty liver</li>
+          <li>Biopsy-confirmed NASH</li>
+          <li>LSM &gt;7 kPa on transient elastography</li>
+          <li>MASLD with concurrent T2DM/dyslipidemia</li>
+        </ul>
+      </div>
+
+      <div class="indication-card reveal delay-3">
+        <div class="indication-num">03</div>
+        <h3>Hypertriglyceridemia</h3>
+        <p>Primary hypertriglyceridemia unresponsive to lifestyle modification and conventional fibrate therapy — particularly in South Asian high-TG phenotypes.</p>
+        <ul class="indication-bullets">
+          <li>Severe hypertriglyceridemia (&gt;500 mg/dL)</li>
+          <li>Fibrate-resistant triglyceride elevation</li>
+          <li>Post-prandial lipemia</li>
+          <li>Familial combined hyperlipidemia</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ EFFICACY ═══════════════════ -->
+<section id="efficacy">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Clinical Evidence</div>
+      <h2 class="section-title">Proven Efficacy Across Landmark Trials</h2>
+      <p class="section-subtitle">Data from PRESS I–VI, EVIDENCES trials, and LEAD INDIA real-world evidence — directly applicable to the South Asian metabolic phenotype.</p>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid" style="margin-top: 60px;">
+      <div class="stat-card reveal delay-1">
+        <div class="stat-number range">45% – 62%</div>
+        <div class="stat-label">Reduction in Triglycerides<br/><a href="https://doi.org/10.1186/s12933-019-0884-3" target="_blank" rel="noopener">(PRESS Trials)</a></div>
+      </div>
+      <div class="stat-card reveal delay-2">
+        <div class="stat-number"><span class="counter" data-target="1.5">0</span><span class="stat-unit">%</span></div>
+        <div class="stat-label">Absolute HbA1c Reduction<br/><a href="https://doi.org/10.1186/s12933-020-01073-w" target="_blank" rel="noopener">(PRESS XII study)</a></div>
+      </div>
+      <div class="stat-card reveal delay-3">
+        <div class="stat-number"><span class="counter" data-target="45.8">0</span><span class="stat-unit">%</span></div>
+        <div class="stat-label">Reduction in ALT<br/><a href="https://doi.org/10.1002/hep.31843" target="_blank" rel="noopener">(EVIDENCES IV)</a></div>
+      </div>
+      <div class="stat-card reveal delay-4">
+        <div class="stat-number"><span class="counter" data-target="25.1">0</span><span class="stat-unit">%</span></div>
+        <div class="stat-label">Reduction in AST<br/><a href="https://doi.org/10.1002/hep.31843" target="_blank" rel="noopener">(EVIDENCES IV)</a></div>
+      </div>
+      <div class="stat-card reveal delay-4">
+        <div class="stat-number"><span class="counter" data-target="4">0</span><span class="stat-unit">mg</span></div>
+        <div class="stat-label">Once Daily Oral Dose<br/>(Optimal therapeutic range)</div>
+      </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="chart-container reveal">
+      <div class="chart-title">Triglyceride Reduction: Saroglitazar vs Comparators</div>
+      <canvas id="efficacyChart" height="100"></canvas>
+      <p class="chart-subtitle">Data adapted from PRESS I–VI randomized controlled trials. Values represent mean % reduction from baseline at 24 weeks.</p>
+
+      <div class="trials-strip">
+        <div class="trial-badge">PRESS I</div>
+        <div class="trial-badge">PRESS II</div>
+        <div class="trial-badge">PRESS III</div>
+        <div class="trial-badge">EVIDENCES I</div>
+        <div class="trial-badge">EVIDENCES II</div>
+        <div class="trial-badge">LEAD INDIA RWE</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ SAFETY ═══════════════════ -->
+<section id="safety">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Safety & Tolerability</div>
+      <h2 class="section-title">A Superior Safety Profile</h2>
+    </div>
+
+    <div class="safety-header reveal">
+      <div class="safety-shield">🛡️</div>
+      <div class="safety-intro">
+        <p class="section-subtitle" style="max-width:none;">Unlike traditional TZDs (Pioglitazone) or fibrates, Liposem achieves dual metabolic benefits with a markedly cleaner tolerability profile — addressing the core safety concerns that limit existing therapies.</p>
+        <div class="safety-highlight" style="margin-top: 24px; font-size: 0.9375rem;">
+          ✓ <strong>No significant weight gain or edema</strong> — the primary reason physicians switch patients from older TZDs
+        </div>
+      </div>
+    </div>
+
+    <div class="safety-grid">
+      <div class="safety-item reveal delay-1">
+        <div class="safety-check">⚖️</div>
+        <h4>Weight & Fluid Neutral</h4>
+        <p>Minimal to no risk of weight gain or peripheral edema — in stark contrast to full PPAR-γ agonists like Pioglitazone.</p>
+        <div class="safety-highlight">No significant change in body weight across all PRESS trials</div>
+      </div>
+
+      <div class="safety-item reveal delay-2">
+        <div class="safety-check">🫘</div>
+        <h4><a href="https://doi.org/10.7759/cureus.105083" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,0.3);transition:color 0.2s;" onmouseover="this.style.color='var(--teal)'" onmouseout="this.style.color='inherit'">Renal Safety ↗</a></h4>
+        <p>Primarily hepatic clearance makes Liposem safe for patients with concurrent Chronic Kidney Disease (CKD stages 1–3).</p>
+        <div class="safety-highlight">Non-renal clearance — CKD patients can be treated safely</div>
+      </div>
+
+      <div class="safety-item reveal delay-3">
+        <div class="safety-check">❤️</div>
+        <h4>Cardioprotective</h4>
+        <p>Reduces systemic inflammatory markers including hs-CRP, with favorable effects on HDL-C and an overall anti-atherogenic lipid profile.</p>
+        <div class="safety-highlight">↓ hs-CRP · ↑ HDL-C · ↓ LDL-C</div>
+      </div>
+
+      <div class="safety-item reveal delay-4">
+        <div class="safety-check">🦴</div>
+        <h4>No Increased Fracture Risk</h4>
+        <p>The moderate, balanced PPAR-γ activity does not carry the bone density concerns associated with full PPAR-γ agonists.</p>
+        <div class="safety-highlight">No significant effect on bone mineral density</div>
+      </div>
+
+      <div class="safety-item reveal delay-1">
+        <div class="safety-check">🩺</div>
+        <h4>Hepatic Tolerability</h4>
+        <p>Despite liver-directed action, Liposem consistently reduces liver enzymes — not elevates them — in MASLD/NASH populations.</p>
+        <div class="safety-highlight">ALT/AST normalization in LEAD INDIA real-world cohort</div>
+      </div>
+
+      <div class="safety-item reveal delay-2">
+        <div class="safety-check">💊</div>
+        <h4>Minimal Drug Interactions</h4>
+        <p>CYP2C8-mediated metabolism with no clinically significant interactions with common co-administered medications (statins, metformin, ACE inhibitors).</p>
+        <div class="safety-highlight">Safe combination with statins and metformin</div>
+      </div>
+    </div>
+
+    <!-- Comparison Table -->
+    <div style="margin-top: 60px;">
+      <div class="section-label reveal" style="margin-bottom: 24px;">Comparative Advantage</div>
+      <div class="comparison-grid reveal">
+        <div class="compare-col">
+          <h4 style="color: var(--text-muted);">Pioglitazone (TZD Class)</h4>
+          <ul class="compare-list">
+            <li><span class="cross-icon">✗</span>Significant weight gain (4–6 kg)</li>
+            <li><span class="cross-icon">✗</span>Peripheral edema risk</li>
+            <li><span class="cross-icon">✗</span>Increased fracture risk (women)</li>
+            <li><span class="cross-icon">✗</span>Potential bladder cancer signal</li>
+            <li><span class="cross-icon">✗</span>No significant TG reduction</li>
+          </ul>
+        </div>
+        <div class="vs-badge">VS</div>
+        <div class="compare-col liposem">
+          <h4 style="color: var(--teal);">Liposem (Saroglitazar)</h4>
+          <ul class="compare-list liposem-list">
+            <li><span class="check-icon">✓</span>Weight neutral — no meaningful gain</li>
+            <li><span class="check-icon">✓</span>No clinically significant edema</li>
+            <li><span class="check-icon">✓</span>No fracture signal in trials</li>
+            <li><span class="check-icon">✓</span>Clean long-term safety record (10+ years)</li>
+            <li><span class="check-icon">✓</span>45–60% TG reduction (dual action)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ RESOURCES ═══════════════════ -->
+<section id="resources">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Resources & Downloads</div>
+      <h2 class="section-title">Scientific Evidence at Your Fingertips</h2>
+      <p class="section-subtitle">Access the complete clinical dossier — designed for evidence-based prescribing decisions.</p>
+    </div>
+
+    <div class="download-grid">
+      <div class="download-card reveal delay-1">
+        <div class="download-icon">💊</div>
+        <h4>Co-Administration with Statins (Real World Study)</h4>
+        <p>Co-administration with ongoing statin therapy offers additional benefits, with no adverse interactions observed. Saroglitazar in combination with statins exhibited consistently greater reductions. At 96 weeks, LSM declined by 51.5% in the combination group versus 30.4% with Saroglitazar alone (p&lt;0.001), with this differential sustained at 144 weeks (49.9% vs 46.5%). Similarly, CAP values decreased more substantially in the statin group across all timepoints, with a maximal reduction of 22.6% at 96 weeks.</p>
+        <a href="https://doi.org/10.1016/j.jceh.2025.102942" target="_blank" rel="noopener" class="download-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          View Study ↗
+        </a>
+      </div>
+
+      <div class="download-card reveal delay-2">
+        <div class="download-icon">🌏</div>
+        <h4>LEAD INDIA Real-World Study</h4>
+        <p>Indian real-world evidence directly applicable to South Asian populations. LSM, CAP, ALT outcomes in MASLD/NASH cohort.</p>
+        <a href="https://doi.org/10.7759/cureus.89028" target="_blank" rel="noopener" class="download-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          View Study ↗
+        </a>
+      </div>
+
+      <div class="download-card reveal delay-3">
+        <div class="download-icon">🫀</div>
+        <h4>Saroglitazar 4 Mg in MASLD</h4>
+        <p>Saroglitazar 4 mg once daily significantly reduced liver stiffness by 20.7% (from 10.1 to 8.0 kPa), hepatic steatosis (CAP by 20.3 dB/m), ALT by 33.6%, and HbA1c by 4.8% over 24 weeks in 500 real-world MASLD patients.</p>
+        <a href="https://doi.org/10.1111/liv.70558" target="_blank" rel="noopener" class="download-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          View Study ↗
+        </a>
+      </div>
+
+      <div class="download-card reveal delay-4">
+        <div class="download-icon">📈</div>
+        <h4>Real-World Data</h4>
+        <p>Saroglitazar 4 mg significantly improved liver stiffness, reduced steatosis (76% of severe cases improved), fibrosis stages (16% from F3/F4 to F0-F2), ALT/AST, HbA1c (7.46% to 6.83%), triglycerides (238 to 168 mg/dL), and FBG over 6 months in 50 MASLD patients, despite stable BMI.</p>
+        <a href="https://doi.org/10.1002/edm2.70144" target="_blank" rel="noopener" class="download-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          View Study ↗
+        </a>
+      </div>
+
+      <div class="download-card reveal delay-1">
+        <div class="download-icon">🫘</div>
+        <h4>Efficacy on Stage 3 CKD Patients</h4>
+        <p>Saroglitazar 4 mg once daily over 12 months significantly reduced triglycerides by 36.4%, liver stiffness by 31.7%, ALT by 46.1%, and AST by 38.1% in 250 patients with T2DM, MASLD, and stage 3 CKD, while maintaining stable eGFR and excellent tolerability with no serious adverse events.</p>
+        <a href="https://doi.org/10.1111/dom.70370" target="_blank" rel="noopener" class="download-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          View Study ↗
+        </a>
+      </div>
+
+      <div class="download-card reveal delay-2">
+        <div class="download-icon">🔬</div>
+        <h4>Saroglitazar Cuts Liver Fat 15% in PCOS-MASLD Women: EVIDENCES VII RCT</h4>
+        <p>Saroglitazar 4 mg/day significantly reduced MRI-PDFF by 14.7% (36% achieving ≥30% reduction vs 8.7% placebo, p=0.024), ALT by 37%, AlkP by 28%, triglycerides by 16%, and total cholesterol by 13% over 24 weeks in women with PCOS and MASLD, with excellent tolerability and no weight gain.</p>
+        <a href="https://doi.org/10.1210/jendso/bvaf149.103" target="_blank" rel="noopener" class="download-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          View Study ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- FAQ Accordion -->
+    <div style="margin-top: 80px;">
+      <div class="reveal">
+        <div class="section-label" style="margin-bottom: 8px;">Quick Reference</div>
+        <h3 class="section-title" style="font-size: 1.75rem; margin-bottom: 0;">Frequently Asked Questions</h3>
+      </div>
+      <div class="faq-list">
+
+        <div class="faq-item reveal delay-1">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            What is the recommended dosing regimen for Liposem?
+            <div class="faq-chevron">▾</div>
+          </button>
+          <div class="faq-body">
+            <div class="faq-content">Liposem (Saroglitazar Magnesium) is dosed at <strong>4 mg once daily</strong>, taken orally with or without food. The 2 mg tablet form is also available for titration. The drug reaches steady-state plasma concentrations within 3–5 days. No dose adjustment is required in patients with mild-to-moderate renal impairment, given its predominantly hepatic clearance.</div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal delay-2">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            How does Saroglitazar differ from Pioglitazone and conventional fibrates?
+            <div class="faq-chevron">▾</div>
+          </button>
+          <div class="faq-body">
+            <div class="faq-content">Saroglitazar is a unique <strong>dual PPAR α/γ agonist</strong> — not a pure fibrate (PPAR-α only) or a thiazolidinedione (PPAR-γ only). Its predominant PPAR-α activity delivers superior triglyceride reduction compared to fibrates, while its moderate PPAR-γ activity improves glycemic control without the severe weight gain, edema, or fracture risk associated with full PPAR-γ agonists like Pioglitazone.</div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal delay-3">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            Is Liposem safe to use in patients with CKD?
+            <div class="faq-chevron">▾</div>
+          </button>
+          <div class="faq-body">
+            <div class="faq-content">Yes. Saroglitazar undergoes predominantly <strong>hepatic clearance</strong> via glucuronidation and CYP2C8-mediated oxidation, with minimal renal elimination. Clinical data supports use in CKD stages 1–3 without dose adjustment. Caution is advised in severe hepatic impairment (Child-Pugh C). Regular liver function monitoring is recommended as with all hepatically-cleared drugs.</div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal delay-4">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            What is the expected timeline for clinical response?
+            <div class="faq-chevron">▾</div>
+          </button>
+          <div class="faq-body">
+            <div class="faq-content">Triglyceride reduction is typically observed within <strong>4–8 weeks</strong> of initiation. HbA1c reduction follows a glycemic timeline, with meaningful reductions at <strong>12–16 weeks</strong>. Hepatic benefits (ALT normalization, LSM reduction) in MASLD/NASH patients are typically evident at <strong>24 weeks</strong> of continuous therapy, with progressive improvement on sustained treatment.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-logos">
+          <img src="brand_assets/Untitled-7-01.png" alt="Liposem" class="footer-logo liposem" />
+          <div class="footer-divider-v"></div>
+          <img src="brand_assets/Everest Logo.png" alt="Everest Pharmaceuticals Ltd." class="footer-logo everest" />
+        </div>
+        <p>Liposem (Saroglitazar Magnesium INN) is a registered product of Everest Pharmaceuticals Ltd., Bangladesh. For medical professional use. Not for patient self-medication.</p>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5>Navigation</h5>
+          <ul>
+            <li><a href="#mechanism">Mechanism of Action</a></li>
+            <li><a href="#indications">Clinical Indications</a></li>
+            <li><a href="#efficacy">Efficacy Data</a></li>
+            <li><a href="#safety">Safety Profile</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Resources</h5>
+          <ul>
+            <li><a href="https://drive.google.com/file/d/1ul2-t0Jkyo_nZpHncFeir1xo15gzE9gn/view?usp=sharing" target="_blank" rel="noopener">Prescribing Information</a></li>
+            <li><a href="#resources">PRESS Trials</a></li>
+            <li><a href="#resources">LEAD INDIA Study</a></li>
+            <li><a href="#resources">EVIDENCES Data</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Everest Pharma</h5>
+          <ul>
+            <li><a href="#">About EPL</a></li>
+            <li><a href="#">Contact Medical Affairs</a></li>
+            <li><a href="#">Adverse Event Reporting</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-disclaimer">
+      <strong style="color: var(--text-secondary);">Medical Disclaimer:</strong> This website is intended for registered medical professionals only and is not a substitute for professional medical judgment. The clinical data presented is derived from published literature and regulatory filings. Prescribers should refer to the full prescribing information before initiating therapy. Saroglitazar Magnesium is approved for use in diabetic dyslipidemia and MASLD. Adverse events should be reported to Everest Pharmaceuticals Ltd. or the national pharmacovigilance authority.
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Everest Pharmaceuticals Ltd. All rights reserved. Liposem® is a registered trademark.</p>
+      <p>Rx Only · For Prescribers & Healthcare Professionals</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════ SCRIPTS ═══════════════════ -->
+<script>
+  // ── Navbar scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // ── Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // ── Animated counters
+  function animateCounter(el) {
+    const target = parseFloat(el.dataset.target);
+    const isDecimal = target % 1 !== 0;
+    const duration = 1800;
+    const start = performance.now();
+    const step = (now) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      const value = target * ease;
+      el.textContent = isDecimal ? value.toFixed(1) : Math.floor(value);
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = isDecimal ? target.toFixed(1) : target;
+    };
+    requestAnimationFrame(step);
+  }
+
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        animateCounter(e.target);
+        counterObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3, rootMargin: '0px 0px -20px 0px' });
+
+  document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+  // ── FAQ Accordion
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // ── Chart.js Efficacy Chart
+  const ctx = document.getElementById('efficacyChart').getContext('2d');
+
+  const gradient1 = ctx.createLinearGradient(0, 0, 0, 300);
+  gradient1.addColorStop(0, 'rgba(29,181,197,0.6)');
+  gradient1.addColorStop(1, 'rgba(29,181,197,0.05)');
+
+  const gradient2 = ctx.createLinearGradient(0, 0, 0, 300);
+  gradient2.addColorStop(0, 'rgba(154,214,60,0.5)');
+  gradient2.addColorStop(1, 'rgba(154,214,60,0.05)');
+
+  const gradient3 = ctx.createLinearGradient(0, 0, 0, 300);
+  gradient3.addColorStop(0, 'rgba(232,39,42,0.4)');
+  gradient3.addColorStop(1, 'rgba(232,39,42,0.05)');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['PRESS I\n(4mg)', 'PRESS II\n(4mg)', 'PRESS III\n(4mg)', 'PRESS IV\n(2mg)', 'Pioglitazone\n15mg', 'Placebo'],
+      datasets: [{
+        label: '% Reduction in Triglycerides',
+        data: [59.7, 56.4, 53.2, 45.8, 12.4, 4.1],
+        backgroundColor: [gradient1, gradient1, gradient1, gradient2, gradient3, 'rgba(100,100,100,0.3)'],
+        borderColor: ['rgba(29,181,197,0.8)', 'rgba(29,181,197,0.8)', 'rgba(29,181,197,0.8)', 'rgba(154,214,60,0.8)', 'rgba(232,39,42,0.8)', 'rgba(100,100,100,0.5)'],
+        borderWidth: 1,
+        borderRadius: 6,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: 'rgba(10,14,24,0.95)',
+          borderColor: 'rgba(29,181,197,0.3)',
+          borderWidth: 1,
+          titleColor: '#fff',
+          bodyColor: '#a0aec0',
+          padding: 12,
+          callbacks: {
+            label: ctx => ` ${ctx.parsed.y}% reduction from baseline`
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: 'rgba(255,255,255,0.04)', drawBorder: false },
+          ticks: { color: '#636b7a', font: { size: 12 } }
+        },
+        y: {
+          grid: { color: 'rgba(255,255,255,0.06)', drawBorder: false },
+          ticks: { color: '#636b7a', font: { size: 12 }, callback: v => v + '%' },
+          max: 70,
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
