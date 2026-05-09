@@ -107,7 +107,7 @@
       pointer-events: none;
     }
     .nav-logo img { height: 44px; width: auto; pointer-events: auto; }
-    .nav-right { display: flex; justify-content: flex-end; }
+    .nav-right { display: flex; justify-content: flex-end; gap: 10px; }
 
     .nav-links {
       display: flex; align-items: center; gap: 8px; list-style: none;
@@ -133,6 +133,42 @@
 
     .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px var(--teal-glow-strong); }
     .nav-cta:active { transform: translateY(0); }
+
+    .nav-burger {
+      display: none;
+      flex-direction: column; justify-content: center; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 6px;
+      flex-shrink: 0;
+    }
+    .nav-burger span {
+      display: block; width: 22px; height: 2px;
+      background: rgba(255,255,255,0.85); border-radius: 2px;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+    .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.3s ease;
+      background: rgba(8,12,18,0.97);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border-subtle);
+    }
+    .mobile-menu.open { max-height: 320px; }
+    .mobile-menu ul {
+      list-style: none; padding: 12px 20px 20px;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .mobile-menu ul a {
+      display: block; padding: 11px 16px; border-radius: 8px;
+      color: rgba(255,255,255,0.8); text-decoration: none;
+      font-family: 'Calibri', Calibri, sans-serif; font-size: 0.95rem; font-weight: 500;
+      transition: color 0.2s, background 0.2s;
+    }
+    .mobile-menu ul a:hover { color: var(--teal); background: var(--teal-glow); }
 
     /* ─── HERO ─── */
     #hero {
@@ -780,12 +816,17 @@
       .comparison-grid { grid-template-columns: 1fr; }
       .vs-badge { display: none; }
       .nav-links { display: none; }
+      .nav-cta-resources { display: none; }
+      .nav-burger { display: flex; }
+      .mobile-menu { display: block; }
       nav { padding: 16px 20px; }
-      .nav-inner { padding: 12px 20px; }
+      .nav-inner { padding: 12px 20px; justify-content: space-between; }
+      .nav-logo { position: static; transform: none; pointer-events: auto; }
       .section-inner { padding: 70px 24px; }
       #hero { padding: 100px 24px 60px; }
       .safety-header { flex-direction: column; align-items: center; text-align: center; }
       .footer-top { flex-direction: column; }
+      .hero-badge { letter-spacing: 0.04em; font-size: 0.7rem; }
     }
 
     @media (max-width: 600px) {
@@ -812,8 +853,21 @@
       <img src="brand_assets/Untitled-7-01.png" alt="Liposem" class="mx-auto" />
     </div>
     <div class="nav-right">
+      <a href="https://forms.cloud.microsoft/r/K1Jpw5xF9W" target="_blank" rel="noopener" class="nav-cta nav-cta-resources">Request for Resources ↗</a>
       <a href="https://drive.google.com/file/d/1ul2-t0Jkyo_nZpHncFeir1xo15gzE9gn/view?usp=sharing" target="_blank" rel="noopener" class="nav-cta">Prescribing Info ↗</a>
+      <button class="nav-burger" id="navBurger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="#mechanism">Mechanism</a></li>
+      <li><a href="#indications">Indications</a></li>
+      <li><a href="#efficacy">Clinical Data</a></li>
+      <li><a href="#safety">Safety</a></li>
+      <li><a href="#resources">Resources</a></li>
+    </ul>
   </div>
 </nav>
 
@@ -1299,6 +1353,22 @@
 
 <!-- ═══════════════════ SCRIPTS ═══════════════════ -->
 <script>
+  // ── Hamburger menu
+  const navBurger = document.getElementById('navBurger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (navBurger && mobileMenu) {
+    navBurger.addEventListener('click', () => {
+      navBurger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navBurger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      });
+    });
+  }
+
   // ── Navbar scroll
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
