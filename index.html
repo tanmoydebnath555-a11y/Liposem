@@ -815,15 +815,26 @@
       .moa-grid { grid-template-columns: 1fr; }
       .comparison-grid { grid-template-columns: 1fr; }
       .vs-badge { display: none; }
-      .nav-links { display: none; }
+      .nav-burger { display: none; }
+      .mobile-menu { display: none !important; }
       .nav-cta-resources { display: none; }
-      .nav-burger { display: flex; }
-      .mobile-menu { display: block; }
-      nav { padding: 16px 20px; }
-      .nav-inner { padding: 12px 20px; justify-content: space-between; }
-      .nav-logo { position: static; transform: none; pointer-events: auto; }
+      nav { padding: 10px 12px; }
+      .nav-inner {
+        flex-wrap: wrap; gap: 6px; padding: 10px 14px;
+        justify-content: space-between;
+      }
+      .nav-logo { position: static; transform: none; pointer-events: auto; order: 1; flex-shrink: 0; }
+      .nav-right { order: 2; flex-shrink: 0; }
+      .nav-links {
+        order: 3; width: 100%; display: flex;
+        flex-wrap: wrap; justify-content: center; gap: 2px;
+        border-top: 1px solid var(--border-subtle); padding-top: 8px; margin-top: 2px;
+      }
+      .nav-links a { font-size: 0.72rem; padding: 5px 8px; }
+      .nav-logo img { height: 34px; }
+      .nav-cta { font-size: 0.75rem; padding: 7px 12px; }
       .section-inner { padding: 70px 24px; }
-      #hero { padding: 100px 24px 60px; }
+      #hero { padding: 110px 24px 60px; }
       .safety-header { flex-direction: column; align-items: center; text-align: center; }
       .footer-top { flex-direction: column; }
       .hero-badge { letter-spacing: 0.04em; font-size: 0.7rem; }
